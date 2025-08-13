@@ -1,5 +1,12 @@
 <x-laravel-ui-adminlte::adminlte-layout>
 
+    <head>
+        <title>LP2</title>
+        <link rel="icon"
+            href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/1200px-Laravel.svg.png"
+            type="image/x-icon">
+    </head>
+
     <body class="hold-transition login-page">
         <div class="login-box">
             <div class="login-logo">

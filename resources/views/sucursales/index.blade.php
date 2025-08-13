@@ -48,11 +48,13 @@
                     </a>
                     
                     <!-- Botón Agregar Ciudad que abre en nueva pestaña -->
-                    <a class="btn btn-success float-right"
+                    <a class="btn btn-success float-right",
+                       style="margin-right: 5px;",
+                       title="Agregar Ciudad",
                        href="{{ route('ciudades.create') }}"
                        target="_blank">
                        <i class="fas fa-plus"></i>
-                        Agregar Ciudad
+                       
                     </a>
                 </div>
             </div>

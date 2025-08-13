@@ -40,5 +40,3 @@ Route::resource('sucursales', App\Http\Controllers\SucursalController::class);
 Route::resource('cajas', App\Http\Controllers\CajaController::class);
 ## Crear rutas para Users
 Route::resource('users', App\Http\Controllers\UserController::class);
-
-## Vendedor se hizo

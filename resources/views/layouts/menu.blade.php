@@ -47,7 +47,7 @@
 </li>
 <li class="nav-item">
     <a href="{{ route('sucursales.index') }}" class="nav-link {{ Request::is('sucursales*') ? 'active' : '' }}">
-        <i class="fa fa-building"></i>
+        <i class="fas fa-store"></i>
         <p>Sucursales</p>
     </a>
 </li>
