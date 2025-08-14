@@ -57,28 +57,21 @@
         <p>Caja</p>
     </a>
 </li>
-<li class="nav-item">
-    <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
-        <i class="fa fa-users"></i>
-        <p>Usuarios</p>
-    </a>
-</li>
-
-<li class="nav-item menu-is-opening menu-open">
+<li class="nav-item {{ Request::is('users*') ? 'menu-is-opening menu-open' : '' }}
+">
     <a href="#" class="nav-link">
-        <i class="nav-icon fas fa-tree"></i>
+        <i class="fas fa-cogs"></i>
         <p>
-            UI Elements
+            Configuraciones
             <i class="fas fa-angle-left right"></i>
         </p>
     </a>
-    <ul class="nav nav-treeview" style="display: block;">
+    <ul class="nav nav-treeview" style="display: {{ Request::is('users*') ? 'block;' : 'none;' }};">
         <li class="nav-item">
-            <a href="pages/UI/general.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>General</p>
+            <a href="{{ route('users.index') }}" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
+                <i class="fas fa-users"></i>
+                <p>Usuarios</p>
             </a>
         </li>
-        
     </ul>
 </li>
