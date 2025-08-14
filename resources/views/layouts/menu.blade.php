@@ -57,6 +57,13 @@
         <p>Caja</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('clientes.index') }}" class="nav-link {{ Request::is('clientes*') ? 'active' : '' }}">
+        <i class="fa fa-users"></i>
+        <p>Clientes</p>
+    </a>
+</li>
 <li class="nav-item {{ Request::is('users*') ? 'menu-is-opening menu-open' : '' }}
 ">
     <a href="#" class="nav-link">
