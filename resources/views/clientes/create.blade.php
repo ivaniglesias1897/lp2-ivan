@@ -17,6 +17,8 @@
     <div class="content px-3">
 
         @include('adminlte-templates::common.errors')
+        {{-- Llamar a Flash message para mostrar mensajes personalizados desde el controlador --}}
+        @include('flash::message')
 
         <div class="card">
 

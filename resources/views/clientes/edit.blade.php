@@ -6,7 +6,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1>
-                        Edit Clientes
+                        Editar Clientes
                     </h1>
                 </div>
             </div>
@@ -16,10 +16,12 @@
     <div class="content px-3">
 
         @include('adminlte-templates::common.errors')
+        {{-- Llamar a Flash message para mostrar mensajes personalizados desde el controlador --}}
+        @include('flash::message')
 
         <div class="card">
 
-            {!! Form::model($clientes, ['route' => ['clientes.update', $clientes->id], 'method' => 'patch']) !!}
+            {!! Form::model($clientes, ['route' => ['clientes.update', $clientes->id_cliente], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <div class="row">
@@ -28,8 +30,8 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('clientes.index') }}" class="btn btn-default"> Cancel </a>
+                {!! Form::submit('Grabar', ['class' => 'btn btn-primary']) !!}
+                <a href="{{ route('clientes.index') }}" class="btn btn-default"> Cancelar </a>
             </div>
 
             {!! Form::close() !!}

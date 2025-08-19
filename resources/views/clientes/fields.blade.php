@@ -6,8 +6,8 @@
 
 <!-- Cli Apellido Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('cli_apellido', 'Apellido:') !!}
-    {!! Form::text('cli_apellido', null, ['class' => 'form-control', 'required', 'placeholder' => 'Ingrese el Apellido']) !!}
+    {!! Form::label('clie_apellido', 'Apellido:') !!}
+    {!! Form::text('clie_apellido', null, ['class' => 'form-control', 'required', 'placeholder' => 'Ingrese el Apellido']) !!}
 </div>
 
 <!-- Clie Ci Field -->
