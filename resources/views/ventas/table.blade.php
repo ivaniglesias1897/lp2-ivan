@@ -8,8 +8,10 @@
                     <th>Cliente</th>
                     <th>Fecha Venta</th>
                     <th>Factura Nro</th>
+                    <th>Condicion Venta</th>
                     <th>Total</th>
                     <th>Usuario</th>
+                    <th>Estado</th>
                     <th colspan="3">Accion</th>
                 </tr>
             </thead>
@@ -21,18 +23,24 @@
                         <td>{{ $venta->cliente }}</td>
                         <td>{{ \Carbon\Carbon::parse($venta->fecha_venta)->format('d/m/Y') }}</td>
                         <td>{{ $venta->factura_nro }}</td>
+                        <td>{{ $venta->condicion_venta }}</td>
                         <td>{{ number_format($venta->total, 0, '', '.') }}</td>
-                        <td>{{ $venta->usuario }}</td>
+                        <td>{{ $venta->usuario }}</td>  
+                        <td>
+                        <span class="badge bg-success">
+                        {{ $venta->estado }}
+                        </span> 
+                        </td>
                         <td style="width: 120px">
-                            {!! Form::open(['route' => ['ventas.destroy', $ventas->id_venta], 'method' => 'delete']) !!}
+                            {!! Form::open(['route' => ['ventas.destroy', $venta->id_venta], 'method' => 'delete']) !!}
                             <div class='btn-group'>
 
-                                <a href="{{ route('ventas.show', [$ventas->id_venta]) }}" 
+                                <a href="{{ route('ventas.show', [$venta->id_venta]) }}" 
                                     class='btn btn-default btn-xs'>
                                     <i class="far fa-eye"></i>
                                 </a>
 
-                                <a href="{{ route('ventas.edit', [$ventas->id_venta]) }}"
+                                <a href="{{ route('ventas.edit', [$venta->id_venta]) }}"
                                     class='btn btn-default btn-xs'>
                                     <i class="far fa-edit"></i>
                                 </a>

@@ -5,3 +5,7 @@ comment on column ventas.intervalo
 is 'intervalo para saber cada cuendo sera el vencimiento solo para creditos';
 Alter table ventas add column cantidad_cuotas integer default 0;
 Alter table ventas add column estado varchar(30);
+
+
+--
+Alter table ventas Alter column id_apertura drop not null;

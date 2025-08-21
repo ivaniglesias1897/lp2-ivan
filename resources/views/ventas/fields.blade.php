@@ -50,6 +50,7 @@
     {!! Form::label('intervalo_vencimiento', 'Intervalo de vencimiento:') !!}
     {!! Form::select('intervalo_vencimiento', $intervalo_vencimiento, null, [
         'class' => 'form-control',
+        'id' => 'intervalo_vencimiento',
         'placeholder' => 'Seleccione una intervalo',
     ]) !!}
 </div>
@@ -59,6 +60,7 @@
     {!! Form::label('cantidad_cuota', 'Cantidad cuota:') !!}
     {!! Form::number('cantidad_cuota', null, [
         'class' => 'form-control',
+        'id' => 'cantidad_cuota',
         'placeholder' => 'Ingrese la cantidad de cuotas',
     ]) !!}
 </div>
@@ -79,9 +81,13 @@
             if (condicion_venta == "CONTADO") {
                 $('#div_intervalo').hide();
                 $('#div_cantidad_cuota').hide();
+                $('#intervalo').prop('required', false); // el prop es para asignar una propiedad al campo input y decirle no requerido
+                $('#cantidad_cuota').prop('required', false);
             } else {
                 $('#div_intervalo').show();
                 $('#div_cantidad_cuota').show();
+                $('#intervalo').prop('required', true); // el prop es para asignar una propiedad al campo input y decirle requerido
+                $('#cantidad_cuota').prop('required', true);
             }
           });  
         });
