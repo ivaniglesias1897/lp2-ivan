@@ -69,6 +69,12 @@
                 reserved.
             </footer>
         </div>
+
+        <!-- REQUIRED SCRIPTS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        
+        <!-- CARGAR CODIGO JAVA SCRIPTS DESDE LOS BLADES -->
+        @stack('scripts')
         <!-- CUSTOM SCRIPTS -->
         <script>
             //formato de numeros separador de miles
