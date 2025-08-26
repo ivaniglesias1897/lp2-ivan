@@ -8,10 +8,10 @@
 
             <div class="card">
                 <div class="card-body register-card-body">
-                    <p class="login-box-msg">Registro</p>
+                    <p class="login-box-msg">Realizar el registro de un nuevo usuario</p>
 
                     <form method="post" action="{{ route('register') }}">
-                        @csrf <!-- token de seguridad -->
+                        @csrf
 
                         <div class="input-group mb-3">
                             <input type="text" name="name"
@@ -42,7 +42,8 @@
 
                         <div class="input-group mb-3">
                             <input type="password" name="password"
-                                class="form-control @error('password') is-invalid @enderror" placeholder="Ingrese una contraseña">
+                                class="form-control @error('password') is-invalid @enderror" 
+                                placeholder="Ingrese una contraseña">
                             <div class="input-group-append">
                                 <div class="input-group-text"><span class="fas fa-lock"></span></div>
                             </div>
@@ -55,30 +56,30 @@
 
                         <div class="input-group mb-3">
                             <input type="password" name="password_confirmation" class="form-control"
-                                placeholder="Retype password">
+                                placeholder="Ingrese nuevamente la contraseña">
                             <div class="input-group-append">
                                 <div class="input-group-text"><span class="fas fa-lock"></span></div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-8">
+                            {{-- <div class="col-8">
                                 <div class="icheck-primary">
                                     <input type="checkbox" id="agreeTerms" name="terms" value="agree">
                                     <label for="agreeTerms">
                                         I agree to the <a href="#">terms</a>
                                     </label>
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- /.col -->
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-block">Registrar</button>
                             </div>
                             <!-- /.col -->
                         </div>
                     </form>
 
-                    <a href="{{ route('login') }}" class="text-center">I already have a membership</a>
+                    {{-- <a href="{{ route('login') }}" class="text-center">Ya tengo una membresía</a> --}}
                 </div>
                 <!-- /.form-box -->
             </div><!-- /.card -->
