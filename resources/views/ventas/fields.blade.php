@@ -26,7 +26,7 @@
 </div>
 
 <!-- Id Cliente Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-4">
     {!! Form::label('id_cliente', 'Cliente:') !!}
     {!! Form::select('id_cliente', $clientes, null, [
         'class' => 'form-control',
@@ -36,11 +36,21 @@
 </div>
 
 <!-- Condicion venta Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-4">
     {!! Form::label('condicion_venta', 'Condicion de Venta:') !!}
     {!! Form::select('condicion_venta', $condicion_venta, null, [
         'class' => 'form-control',
         'id' => 'condicion_venta',
+        'required',
+    ]) !!}
+</div>
+
+<!-- sucursal Field -->
+<div class="form-group col-sm-3">
+    {!! Form::label('sucursal', 'Sucursal:') !!}
+    {!! Form::select('id_sucursal', $sucursales, null, [
+        'class' => 'form-control',
+        'id' => 'id_sucursal',
         'required',
     ]) !!}
 </div>
@@ -65,31 +75,50 @@
     ]) !!}
 </div>
 
+<!-- Detalle de venta Field -->
+<div class="form-group col-sm-12">
+    @includeIf('ventas.detalle')
+</div>
+
 <!-- Total Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('total', 'Total:') !!}
-    {!! Form::number('total', null, ['class' => 'form-control']) !!}
+    {!! Form::number('total', null, ['class' => 'form-control', 'id' => 'total']) !!}
 </div>
+
+<!-- Cargar el modal html -->
+@includeIf('ventas.modal_producto')
 
 <!-- Js -->
 @push('scripts')
     <script>
         //comenzar la carga con document ready
         $(document).ready(function() {
-          $('#condicion_venta').on('change', function() {
-              var condicion_venta = $(this).val();
-            if (condicion_venta == "CONTADO") {
-                $('#div_intervalo').hide();
-                $('#div_cantidad_cuota').hide();
-                $('#intervalo').prop('required', false); // el prop es para asignar una propiedad al campo input y decirle no requerido
-                $('#cantidad_cuota').prop('required', false);
-            } else {
-                $('#div_intervalo').show();
-                $('#div_cantidad_cuota').show();
-                $('#intervalo').prop('required', true); // el prop es para asignar una propiedad al campo input y decirle requerido
-                $('#cantidad_cuota').prop('required', true);
-            }
-          });  
+            /** CONSULTAR AJAX PARA LLENAR POR DEFECTO EL MODAL AL ABRIR SE CONSULTA LA URL */
+            document.getElementById('buscar').addEventListener('click', function() {
+                fetch('{{ url('buscar-productos') }}?cod_suc=' + $("#id_sucursal").val()) //capturar el valor de sucursal utilizando val()
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('modalResults').innerHTML = html;
+                    });
+            });
+            $('#condicion_venta').on('change', function() {
+                var condicion_venta = $(this).val();
+                if (condicion_venta == "CONTADO") {
+                    $('#div_intervalo').hide();
+                    $('#div_cantidad_cuota').hide();
+                    $('#intervalo').prop('required',
+                        false
+                        ); // el prop es para asignar una propiedad al campo input y decirle no requerido
+                    $('#cantidad_cuota').prop('required', false);
+                } else {
+                    $('#div_intervalo').show();
+                    $('#div_cantidad_cuota').show();
+                    $('#intervalo').prop('required',
+                        true); // el prop es para asignar una propiedad al campo input y decirle requerido
+                    $('#cantidad_cuota').prop('required', true);
+                }
+            });
         });
     </script>
 @endpush

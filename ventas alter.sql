@@ -9,3 +9,9 @@ Alter table ventas add column estado varchar(30);
 
 --
 Alter table ventas Alter column id_apertura drop not null;
+
+-- crear columna sucursales en ventas
+Alter table ventas add column fk_id_sucursal integer;
+-- agregar foreing en ventas
+Alter table ventas add constraint fk_id_sucursal foreign key(id_sucursal)
+foreign_keys(id_sucursal) references sucursales(id_sucursal);

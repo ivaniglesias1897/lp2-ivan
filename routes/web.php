@@ -44,3 +44,5 @@ Route::resource('users', App\Http\Controllers\UserController::class);
 Route::resource('clientes', App\Http\Controllers\ClienteController::class);
 ## Crear rutas para Ventas
 Route::resource('ventas', App\Http\Controllers\VentaController::class);
+## Crear rutas del buscador de productos
+Route::get('buscar-productos', [App\Http\Controllers\VentaController::class, 'buscarProducto']);

@@ -44,10 +44,15 @@ class VentaController extends Controller
             '30' => '30 Días',
         ];
 
+        //enviar datos de sucursal
+        $sucursales = DB::table('sucursales')->pluck('descripcion', 'id_sucursal');
+
         return view('ventas.create')->with('clientes', $clientes)
             ->with('usuario', $usuario)
             ->with('condicion_venta', $condicion_venta)
-            ->with('intervalo_vencimiento', $intervalo_vencimiento);
+            ->with('intervalo_vencimiento', $intervalo_vencimiento)
+            ->with('sucursales', $sucursales);
+
     }
 
     public function store(Request $request)
@@ -56,28 +61,31 @@ class VentaController extends Controller
 
         $input['intervalo'] = $input['intervalo'] ?? '0';
         $input['cantidad_cuota'] = $input['cantidad_cuota'] ?? '0';
-        
-        $validacion = Validator::make($input, [
-            'id_cliente' => 'required|exists:clientes,id_cliente',
-            'condicion_venta' => 'required|in:CONTADO,CREDITO',
-            'intervalo' => 'required_if:condicion_venta,CREDITO|in:0,7,15,30',
-            'cantidad_cuota' => 'required_if:condicion_venta,CREDITO|integer',
-            'fecha_venta' => 'required|date',
-        ],
-        [
-            'id_cliente.required' => 'El campo cliente es obligatorio',
-            'id_cliente.exists' => 'El cliente seleccionado no existe',
-            'condicion_venta.required' => 'Seleccione una condicion de venta',
-            'condicion_venta.in' => 'La condicion de venta seleccionada no es válida',
-            'intervalo.required_if' => 'El campo intervalo es obligatorio',
-            'intervalo.in' => 'El intervalo seleccionado no es válido',
-            'cantidad_cuota.required_if' => 'El campo cantidad de cuotas es obligatorio cuando la condicion de venta es credito',
-            'cantidad_cuota.integer' => 'La cantidad de cuotas debe ser un número entero',
-            'fecha_venta.required' => 'El campo fecha de venta es obligatorio',
-            'fecha_venta.date' => 'El campo fecha de venta debe ser una fecha válida',
-            'user_id.required' => 'El campo usuario es obligatorio',
-            'user_id.exists' => 'El usuario seleccionado no es valido',
-        ]);
+
+        $validacion = Validator::make(
+            $input,
+            [
+                'id_cliente' => 'required|exists:clientes,id_cliente',
+                'condicion_venta' => 'required|in:CONTADO,CREDITO',
+                'intervalo' => 'required_if:condicion_venta,CREDITO|in:0,7,15,30',
+                'cantidad_cuota' => 'required_if:condicion_venta,CREDITO|integer',
+                'fecha_venta' => 'required|date',
+            ],
+            [
+                'id_cliente.required' => 'El campo cliente es obligatorio',
+                'id_cliente.exists' => 'El cliente seleccionado no existe',
+                'condicion_venta.required' => 'Seleccione una condicion de venta',
+                'condicion_venta.in' => 'La condicion de venta seleccionada no es válida',
+                'intervalo.required_if' => 'El campo intervalo es obligatorio',
+                'intervalo.in' => 'El intervalo seleccionado no es válido',
+                'cantidad_cuota.required_if' => 'El campo cantidad de cuotas es obligatorio cuando la condicion de venta es credito',
+                'cantidad_cuota.integer' => 'La cantidad de cuotas debe ser un número entero',
+                'fecha_venta.required' => 'El campo fecha de venta es obligatorio',
+                'fecha_venta.date' => 'El campo fecha de venta debe ser una fecha válida',
+                'user_id.required' => 'El campo usuario es obligatorio',
+                'user_id.exists' => 'El usuario seleccionado no es valido',
+            ]
+        );
 
         if ($validacion->fails()) {
             return redirect()->back()->withErrors($validacion)->withInput();
@@ -85,7 +93,7 @@ class VentaController extends Controller
 
         $user_id = auth()->user()->id;
         $ventas = DB::table('ventas')->insertGetId([
-            
+
             'id_cliente' => $input['id_cliente'],
             'condicion_venta' => $input['condicion_venta'],
             'intervalo' => $input['intervalo'] ?? '0',
@@ -111,5 +119,40 @@ class VentaController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function buscarProducto(Request $request)
+    {
+        $query = strtoupper($request->get('query')); //contenido a buscar
+        $cod_suc = $request->get('cod_suc');
+
+        ## Si query es vacio mostrar todo los productos utilizando un limitador
+        if ($query) {
+            $productos = DB::select(
+                "SELECT productos.*, stocks.cantidad, stocks.id_sucursal
+        FROM productos
+        JOIN stocks ON productos.id_producto = stocks.id_producto
+        WHERE (CAST(productos.id_producto AS TEXT) iLIKE ? OR CAST(productos.descripcion AS TEXT) iLIKE ?)
+        AND stocks.id_sucursal = ?
+        LIMIT 20",
+                [
+                    '%' . $query . '%',
+                    '%' . $query . '%',
+                    $cod_suc
+                ]
+            );
+        } else {
+            ## Cargar los primeros 20 productos si no hay búsqueda
+            $productos = DB::select(
+                "SELECT productos.*, stocks.cantidad, stocks.id_sucursal
+FROM productos
+JOIN stocks ON productos.id_producto = stocks.id_producto
+WHERE stocks.id_sucursal = ?
+LIMIT 20",
+                [$cod_suc]
+            );
+        }
+
+        ## Retornar la variable productos segun el filtro a nuestro html de buscar_productos
+        return view('ventas.body_producto')->with('productos', $productos);
     }
 }
