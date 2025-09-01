@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <div class="container-fluid">
-            <div class="row mb-2">
+            <div class="mb-2 row">
                 <div class="col-sm-12">
                     <h1>
                         Edit Ventas
@@ -13,13 +13,13 @@
         </div>
     </section>
 
-    <div class="content px-3">
+    <div class="px-3 content">
 
         @include('adminlte-templates::common.errors')
 
         <div class="card">
 
-            {!! Form::model($ventas, ['route' => ['ventas.update', $ventas->id], 'method' => 'patch']) !!}
+            {!! Form::model($ventas, ['route' => ['ventas.update', $ventas->id_venta], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <div class="row">
@@ -28,8 +28,8 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('ventas.index') }}" class="btn btn-default"> Cancel </a>
+                {!! Form::submit('Grabar', ['class' => 'btn btn-primary']) !!}
+                <a href="{{ route('ventas.index') }}" class="btn btn-default"> Cancelar </a>
             </div>
 
             {!! Form::close() !!}

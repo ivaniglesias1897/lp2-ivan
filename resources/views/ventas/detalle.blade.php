@@ -13,8 +13,7 @@
         <div class="row">
             <!-- Botón para abrir el modal -->
             <div class="col-12 col-sm-12">
-                <button type="button" class="btn btn-primary" id="buscar" style="float: right" data-toggle="modal"
-                    data-target="#productSearchModal">
+                <button type="button" class="btn btn-primary" id="buscar" style="float: right">
                     <i class="fas fa-search"></i>
                     Buscar Producto
                 </button>
